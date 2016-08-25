@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>REACT ADMIN DEMO</title>
+    <!-- Load JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+    <!-- Load the Esri Javascript API and CSS, plus the Claro theme -->
+    <link rel="stylesheet" href="https://js.arcgis.com/3.15/esri/css/esri.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.15/dijit/themes/claro/claro.css">
+    <script src="https://js.arcgis.com/3.15/"></script>
+
+
+
+    <!-- Load the application -->
+    <script src="js\admin.js"></script>
+
+    <style>
+      html, body, #mapDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+      }
+      .esriSimpleSliderHomeButton{
+          background-image: url(images/Home_Extent_24.png);
+          background-repeat:no-repeat;
+          background-position:center;
+          border-bottom: 1px solid #666666;
+      }
+      li {
+        color: blue;
+        text-decoration:underline;
+        list-style: none;
+        margin: 8px 0 8px -20px;
+        cursor: pointer;
+      }
+      button[disabled] {
+        pointer-events: none;
+      }
+  </style>
+  </head>
+
+  <body class="claro">
+    <div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="gutters:true, design:'headline'" style="width:100%;height:100%;">
+      <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'left'">
+        <h3> REACT ADMIN </h3>
+        <p><strong>Enter event name:</strong></p>
+        <input id="event_id" maxlength="50" type="text" value=""
+          style="width: 10em; margin: 0px 0px 10px 0px;"
+          data-dojo-type="dijit/form/TextBox"
+          data-dojo-props="trim:true"/>
+        <br>
+        <button id="selectParcels" disabled=true data-dojo-type="dijit/form/Button" type="button">Select Parcels</button> <br>
+        <button id="clearSelection" data-dojo-type="dijit/form/Button" type="button">Clear Selection</button> <br>
+        <button id="createCanvassArea" disabled=true data-dojo-type="dijit/form/Button" type="button">Create or Update Event</button> <br>
+        <button id="retireEvent" data-dojo-type="dijit/form/Button" type="button">Retire Event</button>
+        <div id="activeEvents"></div>
+      </div>
+      <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
+        <div id="mapDiv"></div>
+      </div>
+    </div>
+  </body>
+
+</html>
