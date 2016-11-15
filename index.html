@@ -4,6 +4,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>REACT Demo</title>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
     <!-- Load JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
@@ -18,51 +19,15 @@
     <link rel="stylesheet" href="https://js.arcgis.com/3.15/esri/css/esri.css">
     <link rel="stylesheet" href="https://js.arcgis.com/3.15/dijit/themes/claro/claro.css">
     <script src="https://js.arcgis.com/3.15/"></script>
-
-
-
-    <!-- Load the application -->
-    <script src="js\canvass.js"></script>
-
-    <style>
-      html, body, #mapDiv {
-        padding: 0;
-        margin: 0;
-        height: 95%;
-      }
-      .esriSimpleSliderHomeButton{
-          background-image: url(images/Home_Extent_24.png);
-          background-repeat:no-repeat;
-          background-position:center;
-          border-bottom: 1px solid #666666;
-      }
-
-  </style>
+    <link rel="stylesheet" href="css/styles.css">
   </head>
 
   <body class="claro">
-      <div class="btn-group" role="group" aria-label="Basic example" style="width: 100%;">
-        <button type="button" class="btn" id="notInArea" style="width: 100%; font-size: 2.7vh;" disabled>REACT: Select a parcel in the event area.</button>
-        <button type="button" class="btn" id="address" style="width: 100%; font-size: 2.7vh;" disabled></button>
-      </div>
-      <div class="btn-group action-btns" role="group" aria-label="Basic example" style="width: 100%; display:none;">
-        <button type="button" class="btn btn-default" id="contacted" style="width: 33%; font-size: 2.8vh;">
-          <span class="glyphicon glyphicon-ok-sign" aria-hidden="true">
-            <p>Contacted</p>
-          </span>
-        </button>
-        <button type="button" class="btn btn-default" id="attempted" style="width: 34%; font-size: 2.8vh;">
-          <span class="glyphicon glyphicon-question-sign">
-            <p>Attempted</p>
-          </span>
-        </button>
-        <button type="button" class="btn btn-default" id="notContacted" style="width: 33%; font-size: 2.8vh;">
-          <span class="glyphicon glyphicon-remove-sign">
-            <p style="font-family: 'Times New Roman', Georgia, Serif;">Not Contacted</p>
-          </span>
-        </button>
-      </div>
+  <div id="appContainer">
       <div id="mapDiv"></div>
+  </div>
+    <!-- Load the application -->
+    <script src="js\reactuser.js"></script>
 
   </body>
 

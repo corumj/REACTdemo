@@ -1,5 +1,11 @@
 var map;
 
+// Consolidated map service URLs
+const ReactFSPoly = 'https://chandleraz.gov/arcgis/rest/services/demo/REACT_DEMO_FS/FeatureServer/0';
+const ReactFSTable = 'https://chandleraz.gov/arcgis/rest/services/demo/REACT_DEMO_FS/FeatureServer/1'
+const ReactMS = 'https://chandleraz.gov/arcgis/rest/services/demo/REACT_DEMO_MS/MapServer';
+// const ReactBaseMap = '';
+
 require([
   "esri/map",
   "esri/graphic",
@@ -51,7 +57,7 @@ require([
       center: [-111.841,33.304],
       zoom: 14,
         sliderPosition:"bottom-left",
-      basemap: "topo"
+      basemap: 'streets'
     });
     dojo.connect(map, "onLoad", function() {
       var initExtent = map.extent;
@@ -76,19 +82,19 @@ require([
       }
     }
     // FEATURE SERVICE //
-    var nbhd_poly = new FeatureLayer("https://chandleraz.gov/arcgis/rest/services/demo/REACT_DEMO_FS/FeatureServer/0", {
+    var nbhd_poly = new FeatureLayer(ReactFSPoly, {
       mode: FeatureLayer.MODE_ONDEMAND,
       outFields: ["*"],
       id: "nbhd_poly"
     });
     // RELATED TABLE //
-    var canvassTable = new FeatureLayer("https://chandleraz.gov/arcgis/rest/services/demo/REACT_DEMO_FS/FeatureServer/1");
+    var canvassTable = new FeatureLayer(ReactFSTable);
     // BASEMAP //
-    // var basemaplayer = new ArcGISTiledMapServiceLayer("https://chandleraz.gov/arcgis/rest/services/PublicSafety/basemap/MapServer", {
+    // var basemaplayer = new ArcGISTiledMapServiceLayer(ReactBaseMap, {
     //   id: "basemaplayer"
     // });
     // Canvassing Area MapServer
-    var mapservicelayer = new ArcGISDynamicMapServiceLayer("https://chandleraz.gov/arcgis/rest/services/demo/REACT_DEMO_MS/MapServer", {
+    var mapservicelayer = new ArcGISDynamicMapServiceLayer(ReactMS, {
       id: "mapservicelayer",
       disableClientCaching: true,
       opacity: 0.55,
@@ -97,7 +103,7 @@ require([
     map.addLayers([nbhd_poly, mapservicelayer]);
 
     function updateCurrentEvents() {
-      var activeEventsQueryTask = new esri.tasks.QueryTask("https://chandleraz.gov/arcgis/rest/services/demo/REACT_DEMO_FS/FeatureServer/1");
+      var activeEventsQueryTask = new esri.tasks.QueryTask(ReactFSTable);
       var activeEventsQuery = new Query();
       activeEventsQuery.outFields = ["EVENT_NAME"];
       activeEventsQuery.where = "ACTIVE='Yes'";
@@ -161,7 +167,7 @@ require([
               selectedFeatures.forEach(function(element, index, array) {
                 selectedEIDArray.push(element.attributes.EID);
               });
-              var existingQueryTask = new esri.tasks.QueryTask("https://chandleraz.gov/arcgis/rest/services/demo/REACT_DEMO_FS/FeatureServer/1");
+              var existingQueryTask = new esri.tasks.QueryTask(ReactFSTable);
               var existingQuery = new Query();
               existingQuery.outFields = ["*"];
               existingQuery.where = "EVENT_NAME='" + evtName + "'";
@@ -221,7 +227,7 @@ require([
       } else {
       var retireYesNo = confirm("Are you sure you wish to retire this event?\n" + evtName);
       if (retireYesNo) {
-        var existingQueryTask = new esri.tasks.QueryTask("https://chandleraz.gov/arcgis/rest/services/demo/REACT_DEMO_FS/FeatureServer/1");
+        var existingQueryTask = new esri.tasks.QueryTask(ReactFSTable);
         var existingQuery = new Query();
         var locArray = [];
         existingQuery.outFields = ["*"];
@@ -240,10 +246,10 @@ require([
               locArray.push(addLoc);
             });
           canvassTable.applyEdits(null, locArray, null, function(addResults) {
-            mapservicelayer.refresh();
             nbhd_poly.clearSelection();
             $("#event_id").prop("value", "");
             map.centerAndZoom([-111.841,33.304], 14);
+            mapservicelayer.refresh();
             updateCurrentEvents();
           });
           }
@@ -258,7 +264,7 @@ require([
 
       //zoom to the clicked event's location
       var clickedEvent = $(this)[0].innerHTML;
-      var clickedQueryTask = new esri.tasks.QueryTask("https://chandleraz.gov/arcgis/rest/services/demo/REACT_DEMO_FS/FeatureServer/1");
+      var clickedQueryTask = new esri.tasks.QueryTask(ReactFSTable);
       var clickedQuery = new Query();
       clickedQuery.outFields = ["EID"];
       clickedQuery.where = "EVENT_NAME='" + clickedEvent + "'";
